@@ -22,6 +22,8 @@ import {Svg} from '../utils/svg.js';
 import {TextBubble} from '../bubbles/text_bubble.js';
 import {TextInputBubble} from '../bubbles/textinput_bubble.js';
 import type {WorkspaceSvg} from '../workspace_svg.js';
+import { Abstract } from '../events/events.js';
+import { removeElem } from '../utils/array.js';
 
 /** The size of the comment icon in workspace-scale units. */
 const SIZE = 17;
@@ -44,6 +46,8 @@ export class CommentIcon extends Icon implements IHasBubble, ISerializable {
    * weight values are rendered farther toward the end of the block.
    */
   static readonly WEIGHT = 3;
+
+  static readonly RESIZE_TIMEOUT = 1000;
 
   /** The bubble used to show editable text to the user. */
   private textInputBubble: TextInputBubble | null = null;
@@ -222,13 +226,48 @@ export class CommentIcon extends Icon implements IHasBubble, ISerializable {
     }
   }
 
+  createSizeChangeDebouncer(): Function {
+    let timer: number | undefined;
+    let event: Abstract | undefined;
+    let org_args: any[];
+    return (...args: any[]) => {
+      if (timer) {
+        window.clearTimeout(timer);
+      } else {
+        org_args = args;
+      }
+      if (event) {
+        const undo_stack = this.sourceBlock.workspace.getUndoStack();
+        removeElem(undo_stack, event);
+      }
+      event = new (eventUtils.get(eventUtils.BLOCK_CHANGE))(
+        this.sourceBlock,
+        'comment_size',
+        null,
+        org_args[0],
+        this.bubbleSize,
+      );
+      eventUtils.fire(event);
+      
+
+      timer = setTimeout(() => {
+        timer = undefined;
+        event = undefined;
+      }, CommentIcon.RESIZE_TIMEOUT);
+    }
+  }
+
+  fireSizeChangeEvent = this.createSizeChangeDebouncer();
+
   /**
    * Updates the size of this icon in response to changes in the size of the
    * input bubble.
    */
   onSizeChange(): void {
     if (this.textInputBubble) {
+      const oldSize = {...this.bubbleSize};
       this.bubbleSize = this.textInputBubble.getSize();
+      this.fireSizeChangeEvent(oldSize)
     }
   }
 
