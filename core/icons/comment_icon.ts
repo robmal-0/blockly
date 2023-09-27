@@ -226,39 +226,6 @@ export class CommentIcon extends Icon implements IHasBubble, ISerializable {
     }
   }
 
-  createSizeChangeDebouncer(): Function {
-    let timer: number | undefined;
-    let event: Abstract | undefined;
-    let org_args: any[];
-    return (...args: any[]) => {
-      if (timer) {
-        window.clearTimeout(timer);
-      } else {
-        org_args = args;
-      }
-      if (event) {
-        const undo_stack = this.sourceBlock.workspace.getUndoStack();
-        removeElem(undo_stack, event);
-      }
-      event = new (eventUtils.get(eventUtils.BLOCK_CHANGE))(
-        this.sourceBlock,
-        'comment_size',
-        null,
-        org_args[0],
-        this.bubbleSize,
-      );
-      eventUtils.fire(event);
-      
-
-      timer = setTimeout(() => {
-        timer = undefined;
-        event = undefined;
-      }, CommentIcon.RESIZE_TIMEOUT);
-    }
-  }
-
-  fireSizeChangeEvent = this.createSizeChangeDebouncer();
-
   /**
    * Updates the size of this icon in response to changes in the size of the
    * input bubble.
@@ -267,7 +234,14 @@ export class CommentIcon extends Icon implements IHasBubble, ISerializable {
     if (this.textInputBubble) {
       const oldSize = {...this.bubbleSize};
       this.bubbleSize = this.textInputBubble.getSize();
-      this.fireSizeChangeEvent(oldSize)
+      // this.fireSizeChangeEvent(oldSize)
+      eventUtils.fire(
+        new (eventUtils.get(eventUtils.BUBBLE_COMMENT_RESIZE))(
+          this.sourceBlock,
+          oldSize,
+          this.bubbleSize,
+        ),
+      );
     }
   }
 

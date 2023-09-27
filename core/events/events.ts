@@ -18,6 +18,7 @@ import {
 } from './events_block_field_intermediate_change.js';
 import {BlockMove, BlockMoveJson} from './events_block_move.js';
 import {BubbleOpen, BubbleOpenJson, BubbleType} from './events_bubble_open.js';
+import {BubbleCommentResize, BubbleCommentResizeJson} from './events_bubble_comment_resize.js';
 import {Click, ClickJson, ClickTarget} from './events_click.js';
 import {CommentBase, CommentBaseJson} from './events_comment_base.js';
 import {CommentChange, CommentChangeJson} from './events_comment_change.js';
@@ -47,6 +48,8 @@ export {AbstractEventJson};
 export {BubbleOpen};
 export {BubbleOpenJson};
 export {BubbleType};
+export {BubbleCommentResize};
+export {BubbleCommentResizeJson};
 export {BlockBase};
 export {BlockBaseJson};
 export {BlockChange};
@@ -105,6 +108,7 @@ export const BLOCK_MOVE = eventUtils.BLOCK_MOVE;
 export const BLOCK_FIELD_INTERMEDIATE_CHANGE =
   eventUtils.BLOCK_FIELD_INTERMEDIATE_CHANGE;
 export const BUBBLE_OPEN = eventUtils.BUBBLE_OPEN;
+export const BUBBLE_COMMENT_RESIZE = eventUtils.BUBBLE_COMMENT_RESIZE;
 export type BumpEvent = eventUtils.BumpEvent;
 export const BUMP_EVENTS = eventUtils.BUMP_EVENTS;
 export const CHANGE = eventUtils.CHANGE;

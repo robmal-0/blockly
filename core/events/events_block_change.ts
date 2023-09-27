@@ -166,10 +166,6 @@ export class BlockChange extends BlockBase {
       case 'comment':
         block.setCommentText((value as string) || null);
         break;
-      case 'comment_size':
-        const icon = block.icons.find(icon => icon.getType() === CommentIcon.TYPE) as CommentIcon | undefined;
-        icon?.setBubbleSize(value as Size);
-        break;
       case 'collapsed':
         block.setCollapsed(!!value);
         break;

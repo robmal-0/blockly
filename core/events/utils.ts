@@ -141,6 +141,11 @@ export const MARKER_MOVE = 'marker_move';
 export const BUBBLE_OPEN = 'bubble_open';
 
 /**
+ * Name of event that records a bubble comment resize.
+ */
+export const BUBBLE_COMMENT_RESIZE = 'bubble_comment_resize';
+
+/**
  * Name of event that records a trashcan open.
  */
 export const TRASHCAN_OPEN = 'trashcan_open';
