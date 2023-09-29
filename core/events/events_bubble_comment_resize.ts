@@ -1,15 +1,8 @@
 /**
- * @license
- * Copyright 2020 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/**
- * Events fired as a result of bubble open.
+ * Events fired when a bubble comment changes size.
  *
  * @class
  */
-// Former goog.module ID: Blockly.Events.BubbleOpen
 
 import type {AbstractEventJson} from './events_abstract.js';
 import type {BlockSvg} from '../block_svg.js';
@@ -20,28 +13,29 @@ import type {Workspace} from '../workspace.js';
 import { Size } from '../utils.js';
 
 /**
- * Class for a bubble open event.
+ * Class for when a comment changes size.
  */
 export class BubbleCommentResize extends UiBase {
   /** The ID of the block the bubble is attached to. */
   blockId?: string;
 
+  /** The old size of the comment bubble, before it was resized */
   oldSize?: Size;
+
+  /** The new size of the comment bubble, after it has been resized */
   newSize?: Size;
 
   override type = eventUtils.BUBBLE_COMMENT_RESIZE;
 
   /**
    * @param opt_block The associated block. Undefined for a blank event.
-   * @param opt_old_size Whether the bubble is opening (false if closing).
-   *     Undefined for a blank event.
-   * @param opt_new_size Whether the bubble is opening (false if closing).
-   *     Undefined for a blank event.
+   * @param opt_old_size The old size of the bubble comment
+   * @param opt_new_size The new size of the bubble comment
    */
   constructor(
     opt_block?: BlockSvg,
     opt_old_size?: Size,
-    opt_new_size?: Size,
+    opt_new_size?: Size
   ) {
     const workspaceId = opt_block ? opt_block.workspace.id : undefined;
     super(workspaceId);
@@ -75,7 +69,7 @@ export class BubbleCommentResize extends UiBase {
    * Deserializes the JSON event.
    *
    * @param event The event to append new properties to. Should be a subclass
-   *     of BubbleOpen, but we can't specify that due to the fact that
+   *     of BubbleCommentResize, but we can't specify that due to the fact that
    *     parameters to static methods in subclasses must be supertypes of
    *     parameters to static methods in superclasses.
    * @internal
