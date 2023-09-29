@@ -13,11 +13,9 @@
 
 import type {Block} from '../block.js';
 import type {BlockSvg} from '../block_svg.js';
-import { CommentIcon } from '../icons.js';
 import {IconType} from '../icons/icon_types.js';
 import {hasBubble} from '../interfaces/i_has_bubble.js';
 import * as registry from '../registry.js';
-import { Size } from '../utils/size.js';
 import * as utilsXml from '../utils/xml.js';
 import {Workspace} from '../workspace.js';
 import * as Xml from '../xml.js';

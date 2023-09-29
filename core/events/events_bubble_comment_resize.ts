@@ -33,16 +33,15 @@ export class BubbleCommentResize extends UiBase {
 
   /**
    * @param opt_block The associated block. Undefined for a blank event.
-   * @param opt_isOpen Whether the bubble is opening (false if closing).
+   * @param opt_old_size Whether the bubble is opening (false if closing).
    *     Undefined for a blank event.
-   * @param opt_bubbleType The type of bubble. One of 'mutator', 'comment' or
-   *     'warning'. Undefined for a blank event.
+   * @param opt_new_size Whether the bubble is opening (false if closing).
+   *     Undefined for a blank event.
    */
   constructor(
     opt_block?: BlockSvg,
     opt_old_size?: Size,
     opt_new_size?: Size,
-    opt_bubbleType?: BubbleType,
   ) {
     const workspaceId = opt_block ? opt_block.workspace.id : undefined;
     super(workspaceId);
@@ -96,12 +95,6 @@ export class BubbleCommentResize extends UiBase {
     newEvent.blockId = json['blockId'];
     return newEvent;
   }
-}
-
-export enum BubbleType {
-  MUTATOR = 'mutator',
-  COMMENT = 'comment',
-  WARNING = 'warning',
 }
 
 export interface BubbleCommentResizeJson extends AbstractEventJson {

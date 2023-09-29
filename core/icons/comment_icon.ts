@@ -22,8 +22,6 @@ import {Svg} from '../utils/svg.js';
 import {TextBubble} from '../bubbles/text_bubble.js';
 import {TextInputBubble} from '../bubbles/textinput_bubble.js';
 import type {WorkspaceSvg} from '../workspace_svg.js';
-import { Abstract } from '../events/events.js';
-import { removeElem } from '../utils/array.js';
 
 /** The size of the comment icon in workspace-scale units. */
 const SIZE = 17;

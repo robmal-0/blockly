@@ -442,6 +442,18 @@ suite('Events', function () {
         }),
       },
       {
+        title: 'Bubble comment resize',
+        class: Blockly.Events.BubbleCommentResize,
+        getArgs: (thisObj) => [thisObj.block, {width: 100, height: 80}, {width: 120, height: 100}],
+        getExpectedJson: (thisObj) => ({
+          type: 'bubble_comment_resize',
+          group: '',
+          oldSize: { width: 100, height: 80 },
+          newSize: { width: 120, height: 100 },
+          blockId: thisObj.block.id,
+        }),
+      },
+      {
         title: 'Block click',
         class: Blockly.Events.Click,
         getArgs: (thisObj) => [thisObj.block, null, 'block'],
